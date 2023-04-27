@@ -7,7 +7,7 @@ interface IPerson {
 // interface의 내용을 implements 키워드를 통해 person의 클래스를 만듦.
 class Person implements IPerson {
   name: string;
-  age?: number | undefined;
+  age: number | undefined;
 
   constructor(name: string) {
     this.name = name;
