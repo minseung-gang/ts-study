@@ -1,8 +1,19 @@
-import React from "react";
-import { Row, Col, Input, Button } from "antd";
+import React, { useRef } from "react";
+import { Row, Col, Input, InputRef, Button } from "antd";
 import styles from "./Signin.module.css";
+import { InputProps } from "antd/lib/input";
 
-export default function Signin() {
+interface SigninProps {}
+
+//React.FC >> React Function Component의 줄임말로, 함수형 컴포넌트를 정의할 때 사용하는 타입
+const Signin: React.FC<SigninProps> = () => {
+  const emailRef = useRef<InputRef>(null);
+  const passwordRef = useRef<InputRef>(null);
+  function onClickEventHandler() {
+    const eamil = emailRef.current?.input?.value;
+    const password = passwordRef.current?.input?.value;
+  }
+
   return (
     <Row align="middle" className={styles.signin_row}>
       <Col span={24}>
@@ -10,7 +21,7 @@ export default function Signin() {
           <Col span={12}>
             <img
               src="/bg_signin.png"
-              alt="책 이미지"
+              alt="Signin"
               className={styles.signin_bg}
             />
           </Col>
@@ -29,6 +40,7 @@ export default function Signin() {
                 autoComplete="email"
                 name="email"
                 className={styles.input}
+                ref={emailRef}
               ></Input>
             </div>
             <div className={styles.password_title}>
@@ -37,13 +49,18 @@ export default function Signin() {
             <div className={styles.input_area}>
               <Input
                 type="password"
-                autoComplete="currenst-password"
+                autoComplete="current-password"
                 name="password"
                 className={styles.input}
+                ref={passwordRef}
               ></Input>
             </div>
             <div className={styles.button_area}>
-              <Button size="large" className={styles.button}>
+              <Button
+                size="large"
+                className={styles.button}
+                onClick={onClickEventHandler}
+              >
                 Signin
               </Button>
             </div>
@@ -52,4 +69,6 @@ export default function Signin() {
       </Col>
     </Row>
   );
-}
+};
+
+export default Signin;
