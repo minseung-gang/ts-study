@@ -1,17 +1,25 @@
 import React, { useRef } from "react";
 import { Row, Col, Input, InputRef, Button } from "antd";
 import styles from "./Signin.module.css";
-import { InputProps } from "antd/lib/input";
+import { LoginReqType } from "../types";
 
-interface SigninProps {}
+interface SigninProps {
+  login: (reqData: LoginReqType) => void;
+}
 
 //React.FC >> React Function Component의 줄임말로, 함수형 컴포넌트를 정의할 때 사용하는 타입
-const Signin: React.FC<SigninProps> = () => {
+const Signin: React.FC<SigninProps> = ({ login }) => {
   const emailRef = useRef<InputRef>(null);
   const passwordRef = useRef<InputRef>(null);
   function onClickEventHandler() {
-    const eamil = emailRef.current?.input?.value;
+    const email = emailRef.current?.input?.value;
     const password = passwordRef.current?.input?.value;
+    if (!email || !password) {
+      // 이메일이나 비밀번호가 비어있는 경우에 대한 처리
+      return;
+    }
+    const reqData: LoginReqType = { email, password };
+    login(reqData);
   }
 
   return (
